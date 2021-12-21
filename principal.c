@@ -5,12 +5,14 @@
 
 int main(int argc, char *argv[]){
 
-	//int n = 0, flag = 0;
-    printf("Saludos Cordiales -m\n");
+	//Variables que ingresaran por consola
+	int h = 0, c=0, u=0, n=0, flag = 0;
+    printf("Inicio Programa comparacion Algoritmos -m\n");
 	//recibirArgumentos(argc, argv, &n, &flag);
-	/*if(flag==1){
+	recibirArgumentos(argc, argv, &h, &c, &u, &n, &flag);
+	if(flag==1){
 		printf("Se utilizo flag -m\n");
-	}*/
-	//printf("El argumento de flag -h es: %d\n", n);
-	//printGlobal();
+	}		
+    return 0;
+
 }
