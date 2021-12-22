@@ -9,16 +9,24 @@
 int main(int argc, char *argv[]){
 
 	//Variables que ingresaran por consola
-	int c = 0, i=0, o=0, flag = 0;
-    printf("Inicio Programa comparacion Algoritmos -m\n");
-	//recibirArgumentos(argc, argv, &n, &flag);
+	int c = 0, flag = 0;
+	//i nombre archivo entrada
+	//o nombre archivo salida
+	const char* i=0;
+	const char* o=0;
+    printf("Laboratorio III Sistemas Operativos \n");
+	
 	recibirArgumentos(argc, argv, &c, &i, &o, &flag);
 	if(flag==1){
-		printf("Se utilizo flag -b\n");
+		printf("Se utilizo flag -b\n");	
+		LRUAlgoritmo();
 	}
+	printf("Valores ingresados por consola\n");	
 	printf("%d\n",c);		
-	printf("%d\n",i);		
-	printf("%d\n",o);		
+	printf("%s\n",i);		
+	printf("%s\n",o);		
+
+
     return 0;
 
 }

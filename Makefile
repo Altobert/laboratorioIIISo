@@ -1,4 +1,4 @@
-salida_out = salida
+salida_out = politica
 
 
 salida_headers = funciones.h
@@ -22,7 +22,7 @@ $(depends) : $(salida_source) $(salida_headers)
 	@$(CC) -MM $(salida_source) > $@
 
 
-clean :
+clear :
 	$(RM) $(salida_out) $(salida_objects) $(zipfile) $(depends)
 
 .PHONY : build zip clean

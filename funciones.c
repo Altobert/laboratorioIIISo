@@ -4,6 +4,21 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+//Funcion encargada de leer archivo txt
+void leerArchivoFloat(const char* fileName, float * out, int len){
+    //Abrir el archivo en modo binario
+    FILE* fid = fopen(fileName, "rb");
+    if(fid == NULL){
+        printf("Error en funcion leerArchivo() no pudo leer archivo %s \n",fileName);
+        exit(0);
+    }
+    //Se lee el archivo, y se asigna a la variable out.
+    //Automaticamente queda en nuestro arreglo la informacion correspondiente. 
+    fread(out, sizeof(float),len, fid);
+    //Se cierra el archivo
+    fclose(fid);
+}
+
 void LRUAlgoritmo(){
 
     int frames[10], temp[10], pages[10];
@@ -16,7 +31,7 @@ void LRUAlgoritmo(){
     }
     printf("Ingrese numero total de paginas:\t");
     scanf("%d", &total_pages);
-    printf("Enter Values for Reference String:\n");
+    printf("Ingrese los valores referenciados:\n");
     for(m = 0; m < total_pages; m++){
         printf("Value No.[%d]:\t", m + 1);
         scanf("%d", &pages[m]);
@@ -75,11 +90,12 @@ void LRUAlgoritmo(){
                 printf("%d\t", frames[m]);
         }
     }
-    printf("\nTotal Number of Page Faults:\t%d\n", page_fault);
+    printf("\nNumero total de fallos:\t%d\n", page_fault);
     //return 0;    
 }
 
-void recibirArgumentos(int argc, char *argv[], int *c,int *i,int *o, int *flag){
+//void recibirArgumentos(int argc, char *argv[], int *c,char *i,char *o, int *flag){
+void recibirArgumentos(int argc, char *argv[], int *c,const char** i,const char** o, int *flag){
 
 	int flags, opt;
 	char *aux3=NULL;
@@ -107,7 +123,9 @@ void recibirArgumentos(int argc, char *argv[], int *c,int *i,int *o, int *flag){
 	}
 
 	//Se inicializan variables con el fin de no tener fallos por punteros en malas condiciones.	
-	int C = -1, I = -1, O = -1;
+	int C = -1; 
+    const char *I = "";
+    const char *O = "";
 	flags = 0;
 
 	//Se inicia un ciclo while hasta que se verifiquen todos los argumentos ingresados como entradas, 
