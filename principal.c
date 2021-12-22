@@ -17,16 +17,15 @@ int main(int argc, char *argv[]){
     printf("Laboratorio III Sistemas Operativos \n");
 	
 	recibirArgumentos(argc, argv, &c, &i, &o, &flag);
-	if(flag==1){
-		printf("Se utilizo flag -b\n");	
-		LRUAlgoritmo();
-	}
 	printf("Valores ingresados por consola\n");	
 	printf("%d\n",c);		
 	printf("%s\n",i);		
 	printf("%s\n",o);		
-
-
+	
+	if(flag==1){
+		printf("Se utilizo flag -b\n");	
+		LRUAlgoritmo();
+	}	
     return 0;
 
 }

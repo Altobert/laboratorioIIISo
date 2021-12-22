@@ -22,11 +22,11 @@ void leerArchivoFloat(const char* fileName, float * out, int len){
 void LRUAlgoritmo(){
 
     int frames[10], temp[10], pages[10];
-    int total_pages, m, n, position, k, l, total_frames;
+    int total_pages, m, n, position, k, l, total_marcos;
     int a = 0, b = 0, page_fault = 0;
-    printf("\nIngrese numero total de ventanas:\t");
-    scanf("%d", &total_frames);
-    for(m = 0; m < total_frames; m++){
+    printf("\nIngrese numero total de marcos:\t");
+    scanf("%d", &total_marcos);
+    for(m = 0; m < total_marcos; m++){
         frames[m] = -1;
     }
     printf("Ingrese numero total de paginas:\t");
@@ -39,7 +39,7 @@ void LRUAlgoritmo(){
     for(n = 0; n < total_pages; n++){
 
         a = 0, b = 0;
-        for(m = 0; m < total_frames; m++)
+        for(m = 0; m < total_marcos; m++)
         {
                 if(frames[m] == pages[n])
                 {
@@ -50,7 +50,7 @@ void LRUAlgoritmo(){
         }
         if(a == 0)
         {
-                for(m = 0; m < total_frames; m++)
+                for(m = 0; m < total_marcos; m++)
                 {
                     if(frames[m] == -1)
                     {
@@ -62,13 +62,13 @@ void LRUAlgoritmo(){
         }
         if(b == 0)
         {
-                for(m = 0; m < total_frames; m++)
+                for(m = 0; m < total_marcos; m++)
                 {
                     temp[m] = 0;
                 }
-                for(k = n - 1, l = 1; l <= total_frames - 1; l++, k--)
+                for(k = n - 1, l = 1; l <= total_marcos - 1; l++, k--)
                 {
-                    for(m = 0; m < total_frames; m++)
+                    for(m = 0; m < total_marcos; m++)
                     {
                             if(frames[m] == pages[k])
                             {
@@ -76,7 +76,7 @@ void LRUAlgoritmo(){
                             }
                     }
                 }
-                for(m = 0; m < total_frames; m++)
+                for(m = 0; m < total_marcos; m++)
                 {
                     if(temp[m] == 0)
                     position = m;
@@ -85,7 +85,7 @@ void LRUAlgoritmo(){
                 page_fault++;
         }
         printf("\n");
-        for(m = 0; m < total_frames; m++)
+        for(m = 0; m < total_marcos; m++)
         {
                 printf("%d\t", frames[m]);
         }
@@ -124,8 +124,8 @@ void recibirArgumentos(int argc, char *argv[], int *c,const char** i,const char*
 
 	//Se inicializan variables con el fin de no tener fallos por punteros en malas condiciones.	
 	int C = -1; 
-    const char *I = "";
-    const char *O = "";
+    const char *I = NULL;
+    const char *O = NULL;
 	flags = 0;
 
 	//Se inicia un ciclo while hasta que se verifiquen todos los argumentos ingresados como entradas, 
@@ -147,7 +147,8 @@ void recibirArgumentos(int argc, char *argv[], int *c,const char** i,const char*
 		   break;
        
 	   case 'c'://se busca la entrada -c	   		
-	   		C = strtol(optarg, &auxC, 10);//se parsea el argumento ingresado junto al flag -h a entero
+	   		//C = strtol(optarg, &auxC, 10);//se parsea el argumento ingresado junto al flag -h a entero
+            C = strtol(optarg, &auxC, 10);//se parsea el argumento ingresado junto al flag -h a entero
 			if(optarg!=0 && C==0){//si no se ingresa un argumento junto a -h o si no se logra parsear el argumento ingresado, se considera como invalido
 				fprintf(stderr, "Uso correcto: %s [-c numero entero]\n", argv[0]); 
 				exit(EXIT_FAILURE);
@@ -155,7 +156,9 @@ void recibirArgumentos(int argc, char *argv[], int *c,const char** i,const char*
 		   break;		   
 
 	   case 'i': //se busca la entrada -h
-		   I = strtol(optarg, &auxI, 10);//se parsea el argumento ingresado junto al flag -h a entero
+		   //I = strtol(optarg, &auxI, 10);//se parsea el argumento ingresado junto al flag -h a entero
+           printf("Input file i: \"%s\"\n", optarg);
+           I = optarg;
 		   if(optarg!=0 && I==0){//si no se ingresa un argumento junto a -h o si no se logra parsear el argumento ingresado, se considera como invalido
 				fprintf(stderr, "Uso correcto: %s [-h numero entero] [-m]\n", argv[0]); 
 				exit(EXIT_FAILURE);
@@ -163,7 +166,9 @@ void recibirArgumentos(int argc, char *argv[], int *c,const char** i,const char*
 		   break;
 
 		case 'o': //se busca la entrada -u
-		   O = strtol(optarg, &auxO, 10);//se parsea el argumento ingresado junto al flag -h a entero
+		   //O = strtol(optarg, &auxO, 10);//se parsea el argumento ingresado junto al flag -h a entero
+           printf("Input file o: \"%s\"\n", optarg);
+           O = optarg;
 		   if(optarg!=0 && O==0){//si no se ingresa un argumento junto a -h o si no se logra parsear el argumento ingresado, se considera como invalido
 				fprintf(stderr, "Uso correcto: %s [-h numero entero] [-m]\n", argv[0]); 
 				exit(EXIT_FAILURE);
@@ -190,12 +195,12 @@ void recibirArgumentos(int argc, char *argv[], int *c,const char** i,const char*
 		fprintf(stderr, "Uso correcto: %s [-h nchild] [-m]\n", argv[0]); //si el valor que acompaña a -h es negativo, se retorna un error
 		exit(EXIT_FAILURE);
 	}
-    if(I<=0){
+    if(I == NULL){
 		printf("El valor que acompaña a -i debe ser mayor a 0\n");
 		fprintf(stderr, "Uso correcto: %s [-i nchild] [-m]\n", argv[1]); //si el valor que acompaña a -h es negativo, se retorna un error
 		exit(EXIT_FAILURE);
 	}
-    if(O<=0){
+    if(O == NULL){
 		printf("El valor que acompaña a -o debe ser mayor a 0\n");
 		fprintf(stderr, "Uso correcto: %s [-o nchild] [-m]\n", argv[2]); //si el valor que acompaña a -h es negativo, se retorna un error
 		exit(EXIT_FAILURE);
