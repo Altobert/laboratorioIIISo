@@ -21,10 +21,10 @@ int main(int argc, char *argv[]){
 	printf("%d\n",c);		
 	printf("%s\n",i);		
 	printf("%s\n",o);		
-	
+
 	if(flag==1){
 		printf("Se utilizo flag -b\n");	
-		LRUAlgoritmo();
+		LRUAlgoritmo(c);
 	}	
     return 0;
 

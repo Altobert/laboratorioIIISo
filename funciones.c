@@ -19,13 +19,14 @@ void leerArchivoFloat(const char* fileName, float * out, int len){
     fclose(fid);
 }
 
-void LRUAlgoritmo(){
+void LRUAlgoritmo(int marcos){
 
     int frames[10], temp[10], pages[10];
     int total_pages, m, n, position, k, l, total_marcos;
     int a = 0, b = 0, page_fault = 0;
-    printf("\nIngrese numero total de marcos:\t");
-    scanf("%d", &total_marcos);
+    total_marcos = marcos;
+    //printf("\nIngrese numero total de marcos:\t");
+    //scanf("%d", &total_marcos);
     for(m = 0; m < total_marcos; m++){
         frames[m] = -1;
     }

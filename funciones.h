@@ -9,6 +9,6 @@ void recibirArgumentos(int argc, char *argv[], int *c,const char** i,const char*
 void leerArchivoFloat(const char* fileName, float * out, int len);
 
 //Algoritmo LRU
-void LRUAlgoritmo();
+void LRUAlgoritmo(int marcos);
 
 #endif
