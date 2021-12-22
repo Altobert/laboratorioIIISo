@@ -3,8 +3,6 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
-//En este archivo.c se encuentran las implementacion de las 
-//funciones para el laboratorio III de SO.
 
 void LRUAlgoritmo(){
 
@@ -81,14 +79,14 @@ void LRUAlgoritmo(){
     //return 0;    
 }
 
-void recibirArgumentos(int argc, char *argv[], int *h,int *c,int *u, int *n, int *flag){
+void recibirArgumentos(int argc, char *argv[], int *c,int *i,int *o, int *flag){
 
 	int flags, opt;
 	char *aux3=NULL;
 	char *auxC=NULL;
-	char *auxH=NULL;
-	char *auxU=NULL;
-	char *auxN=NULL;
+	char *auxI=NULL;
+	char *auxO=NULL;
+	
 
 	/*
 		Se crea espacio de memoria para cada variable recibida por consola.
@@ -96,9 +94,9 @@ void recibirArgumentos(int argc, char *argv[], int *h,int *c,int *u, int *n, int
 	*/
 	aux3 = malloc(10*sizeof(char));
 	auxC = malloc(10*sizeof(char));
-	auxH = malloc(10*sizeof(char));
-	auxU = malloc(10*sizeof(char));
-	auxN = malloc(10*sizeof(char));
+	auxI = malloc(10*sizeof(char));
+	auxO = malloc(10*sizeof(char));
+	
 
 	if(argc <3){//si se ingresa un numero de argumentos menor a 3, se finaliza la ejecucion del programa
 		//Debe ser 3, porque el nombre del programa se considera como un argumento, siendo -h y el valor que acompañe a -h los dos argumentos faltantes. No se considera -m (que seria el cuarto argumento) porque es un flag que puede ser especificado por el usuario o no
@@ -109,7 +107,7 @@ void recibirArgumentos(int argc, char *argv[], int *h,int *c,int *u, int *n, int
 	}
 
 	//Se inicializan variables con el fin de no tener fallos por punteros en malas condiciones.	
-	int H = -1, C = -1, U = -1, N = -1;
+	int C = -1, I = -1, O = -1;
 	flags = 0;
 
 	//Se inicia un ciclo while hasta que se verifiquen todos los argumentos ingresados como entradas, 
@@ -121,7 +119,7 @@ void recibirArgumentos(int argc, char *argv[], int *h,int *c,int *u, int *n, int
 	//Esto se indica con ":". Por lo tanto, "h:" quiere decir que se espera recibir la opcion -h 
 	//y esta si o si debe estar acompañada de un valor
 	//En cambio, la opcion "-b" no necesita estar acompañada de un valor
-	while((opt = getopt(argc, argv, "bc:h:u:n:")) != -1) { 
+	while((opt = getopt(argc, argv, "bo:i:c:")) != -1) { 
 	   //opt recibe el argumento leido (se hace de forma secuencial) y se ingresa a un switch
 	   //En caso de que opt sea -1, se dejaran de buscar entradas y por lo tanto se podrá salir del while
 	   switch(opt) {
@@ -138,34 +136,24 @@ void recibirArgumentos(int argc, char *argv[], int *h,int *c,int *u, int *n, int
 		    }	   		
 		   break;		   
 
-	   case 'h': //se busca la entrada -h
-		   H = strtol(optarg, &auxH, 10);//se parsea el argumento ingresado junto al flag -h a entero
-		   if(optarg!=0 && H==0){//si no se ingresa un argumento junto a -h o si no se logra parsear el argumento ingresado, se considera como invalido
+	   case 'i': //se busca la entrada -h
+		   I = strtol(optarg, &auxI, 10);//se parsea el argumento ingresado junto al flag -h a entero
+		   if(optarg!=0 && I==0){//si no se ingresa un argumento junto a -h o si no se logra parsear el argumento ingresado, se considera como invalido
 				fprintf(stderr, "Uso correcto: %s [-h numero entero] [-m]\n", argv[0]); 
 				exit(EXIT_FAILURE);
 		   }
 		   break;
 
-		case 'u': //se busca la entrada -u
-		   U = strtol(optarg, &auxU, 10);//se parsea el argumento ingresado junto al flag -h a entero
-		   if(optarg!=0 && U==0){//si no se ingresa un argumento junto a -h o si no se logra parsear el argumento ingresado, se considera como invalido
+		case 'o': //se busca la entrada -u
+		   O = strtol(optarg, &auxO, 10);//se parsea el argumento ingresado junto al flag -h a entero
+		   if(optarg!=0 && O==0){//si no se ingresa un argumento junto a -h o si no se logra parsear el argumento ingresado, se considera como invalido
 				fprintf(stderr, "Uso correcto: %s [-h numero entero] [-m]\n", argv[0]); 
 				exit(EXIT_FAILURE);
 		   }
 		   break;
-
-		case 'n': //se busca la entrada -n
-		   N = strtol(optarg, &auxN, 10);//se parsea el argumento ingresado junto al flag -h a entero
-		   if(optarg!=0 && N==0){//si no se ingresa un argumento junto a -h o si no se logra parsear el argumento ingresado, se considera como invalido
-				fprintf(stderr, "Uso correcto: %s [-h numero entero] [-m]\n", argv[0]); 
-				exit(EXIT_FAILURE);
-		   }
-		   break;
-		
-
+				
 	   default: /* '?' */
-		   fprintf(stderr, "Uso correcto: %s [-h numero entero] [-m]\n",
-				   argv[0]);
+		   fprintf(stderr, "Uso correcto: %s [-h numero entero] [-m]\n", argv[0]);
 		   exit(EXIT_FAILURE);
 	   }
 	}
@@ -174,14 +162,24 @@ void recibirArgumentos(int argc, char *argv[], int *h,int *c,int *u, int *n, int
 		(*flag) = 1;
 	}
 
-	(*h) = H; //se iguala la variable n a N, para poder acceder al valor en el main
 	(*c) = C; //se iguala la variable c a C, para poder acceder al valor en el main
-	(*u) = U; //se iguala la variable u a U, para poder acceder al valor en el main
-	(*n) = N; //se iguala la variable n a N, para poder acceder al valor en el main
+    (*i) = I; //se iguala la variable n a N, para poder acceder al valor en el main
+	(*o) = O; //se iguala la variable n a N, para poder acceder al valor en el main
+	
 
-	if(N<=0){
-		printf("El valor que acompaña a -h debe ser mayor a 0\n");
+	if(C<=0){
+		printf("El valor que acompaña a -c debe ser mayor a 0\n");
 		fprintf(stderr, "Uso correcto: %s [-h nchild] [-m]\n", argv[0]); //si el valor que acompaña a -h es negativo, se retorna un error
+		exit(EXIT_FAILURE);
+	}
+    if(I<=0){
+		printf("El valor que acompaña a -i debe ser mayor a 0\n");
+		fprintf(stderr, "Uso correcto: %s [-i nchild] [-m]\n", argv[1]); //si el valor que acompaña a -h es negativo, se retorna un error
+		exit(EXIT_FAILURE);
+	}
+    if(O<=0){
+		printf("El valor que acompaña a -o debe ser mayor a 0\n");
+		fprintf(stderr, "Uso correcto: %s [-o nchild] [-m]\n", argv[2]); //si el valor que acompaña a -h es negativo, se retorna un error
 		exit(EXIT_FAILURE);
 	}
 
