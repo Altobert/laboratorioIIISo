@@ -1,5 +1,4 @@
 
-
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -19,14 +18,14 @@ void leerArchivoFloat(const char* fileName, float * out, int len){
     fclose(fid);
 }
 
+
 void LRUAlgoritmo(int marcos){
 
     int frames[10], temp[10], pages[10];
     int total_pages, m, n, position, k, l, total_marcos;
     int a = 0, b = 0, page_fault = 0;
     total_marcos = marcos;
-    //printf("\nIngrese numero total de marcos:\t");
-    //scanf("%d", &total_marcos);
+
     for(m = 0; m < total_marcos; m++){
         frames[m] = -1;
     }
@@ -95,11 +94,30 @@ void LRUAlgoritmo(int marcos){
     //return 0;    
 }
 
-//void recibirArgumentos(int argc, char *argv[], int *c,char *i,char *o, int *flag){
+void readFile(const char* nombreArchivo, int *numeroPaginas, int *arrValores){
+    
+    int numbers[100];
+    int i = 0;
+        
+    FILE *file = fopen(nombreArchivo, "r");
+    if(file == NULL){
+        printf("Error en funcion leerArchivo() no pudo leer archivo %s \n",nombreArchivo);
+        exit(0);
+    }else{
+
+        while (fscanf(file, "%d", &numbers[i]) != EOF){
+            i++;            
+        }
+        fclose(file);        
+
+    }     
+    
+    (*numeroPaginas) = i; //Se asigna i al numero de paginas para que pueda ser leido desde main.       
+}
+
 void recibirArgumentos(int argc, char *argv[], int *c,const char** i,const char** o, int *flag){
 
-	int flags, opt;
-	char *aux3=NULL;
+	int flags, opt;	
 	char *auxC=NULL;
 	char *auxI=NULL;
 	char *auxO=NULL;
@@ -108,8 +126,7 @@ void recibirArgumentos(int argc, char *argv[], int *c,const char** i,const char*
 	/*
 		Se crea espacio de memoria para cada variable recibida por consola.
 		Tambien es casteada a tipo de dato entero.
-	*/
-	aux3 = malloc(10*sizeof(char));
+	*/	
 	auxC = malloc(10*sizeof(char));
 	auxI = malloc(10*sizeof(char));
 	auxO = malloc(10*sizeof(char));
@@ -147,8 +164,7 @@ void recibirArgumentos(int argc, char *argv[], int *c,const char** i,const char*
 		   flags = 1;
 		   break;
        
-	   case 'c'://se busca la entrada -c	   		
-	   		//C = strtol(optarg, &auxC, 10);//se parsea el argumento ingresado junto al flag -h a entero
+	   case 'c'://se busca la entrada -c	   			   		
             C = strtol(optarg, &auxC, 10);//se parsea el argumento ingresado junto al flag -h a entero
 			if(optarg!=0 && C==0){//si no se ingresa un argumento junto a -h o si no se logra parsear el argumento ingresado, se considera como invalido
 				fprintf(stderr, "Uso correcto: %s [-c numero entero]\n", argv[0]); 
@@ -190,20 +206,19 @@ void recibirArgumentos(int argc, char *argv[], int *c,const char** i,const char*
     (*i) = I; //se iguala la variable n a N, para poder acceder al valor en el main
 	(*o) = O; //se iguala la variable n a N, para poder acceder al valor en el main
 	
-
 	if(C<=0){
 		printf("El valor que acompaña a -c debe ser mayor a 0\n");
-		fprintf(stderr, "Uso correcto: %s [-h nchild] [-m]\n", argv[0]); //si el valor que acompaña a -h es negativo, se retorna un error
+		fprintf(stderr, "Uso correcto: %s [-h nchild]\n", argv[0]); //si el valor que acompaña a -c es negativo, se retorna un error
 		exit(EXIT_FAILURE);
 	}
     if(I == NULL){
-		printf("El valor que acompaña a -i debe ser mayor a 0\n");
-		fprintf(stderr, "Uso correcto: %s [-i nchild] [-m]\n", argv[1]); //si el valor que acompaña a -h es negativo, se retorna un error
+		printf("El valor que acompaña a -i no debe ser null o vacio\n");
+		fprintf(stderr, "Uso correcto: %s [-i nchild]\n", argv[1]); //si el valor que acompaña a -i es vacio o null, se retorna un error
 		exit(EXIT_FAILURE);
 	}
     if(O == NULL){
-		printf("El valor que acompaña a -o debe ser mayor a 0\n");
-		fprintf(stderr, "Uso correcto: %s [-o nchild] [-m]\n", argv[2]); //si el valor que acompaña a -h es negativo, se retorna un error
+		printf("El valor que acompaña a -o no debe ser null o vacio\n");
+		fprintf(stderr, "Uso correcto: %s [-o nchild]\n", argv[2]); //si el valor que acompaña a -o es vacio o null, se retorna un error
 		exit(EXIT_FAILURE);
 	}
 

@@ -9,7 +9,8 @@
 int main(int argc, char *argv[]){
 
 	//Variables que ingresaran por consola
-	int c = 0, flag = 0;
+	int c = 0, flag = 0, numeroPaginas=0;
+	int arrValores[100];
 	//i nombre archivo entrada
 	//o nombre archivo salida
 	const char* i=0;
@@ -17,15 +18,21 @@ int main(int argc, char *argv[]){
     printf("Laboratorio III Sistemas Operativos \n");
 	
 	recibirArgumentos(argc, argv, &c, &i, &o, &flag);
-	printf("Valores ingresados por consola\n");	
-	printf("%d\n",c);		
-	printf("%s\n",i);		
-	printf("%s\n",o);		
+	
+	printf("%s\n",i);
+	printf("%s\n",o);
+		
+	//Leer archivo
+	readFile(i, &numeroPaginas, arrValores);
+
+	printf("%d\n",numeroPaginas);
+		
+	//Algoritmo LRU	
+	LRUAlgoritmo(c);
 
 	if(flag==1){
-		printf("Se utilizo flag -b\n");	
-		LRUAlgoritmo(c);
-	}	
-    return 0;
+		printf("Se utilizo flag -b\n");
+		return 0;
+	}
 
 }

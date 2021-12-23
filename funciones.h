@@ -8,6 +8,9 @@ void recibirArgumentos(int argc, char *argv[], int *c,const char** i,const char*
 //Cabecera de funcion leer archivo
 void leerArchivoFloat(const char* fileName, float * out, int len);
 
+//Cabecera de funcion encargada de leer archivo
+void readFile(const char* nombreArchivo, int *numeroPaginas, int *arrValores);
+
 //Algoritmo LRU
 void LRUAlgoritmo(int marcos);
 
