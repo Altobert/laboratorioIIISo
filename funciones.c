@@ -4,9 +4,9 @@
 #include <stdlib.h>
 
 //Funcion encargada de leer archivo txt
-void leerArchivoFloat(const char* fileName, float * out, int len){
+void leerArchivo(const char* fileName, float * out, int len){
     //Abrir el archivo en modo binario
-    FILE* fid = fopen(fileName, "rb");
+    FILE* fid = fopen(fileName, "r");
     if(fid == NULL){
         printf("Error en funcion leerArchivo() no pudo leer archivo %s \n",fileName);
         exit(0);
@@ -16,6 +16,57 @@ void leerArchivoFloat(const char* fileName, float * out, int len){
     fread(out, sizeof(float),len, fid);
     //Se cierra el archivo
     fclose(fid);
+}
+
+float *obtenerDatos(float* visible, int largo){
+
+    //Se crea un puntero float y se asigna memoria de forma dinamica.   
+    float *realVector = (float*) malloc(largo * sizeof(float));
+    
+    //Se recorre solo las posiciones pares de *visible.
+    for(int i=0, j=0 ; i<2;j++, i+=2 ){
+        //Se asigna a arreglo dinamico solo los indices
+        //pares, por ende sus valores.
+        realVector[j]=visible[i];
+    }
+
+    return realVector;
+}
+
+void escribirArchivo(const char* fileName, float* out, int len){
+    FILE* fid = fopen(fileName, "w");
+    if(fid == NULL) 
+        return;
+    fwrite(out, sizeof(float), len, fid);
+    fclose(fid);
+}
+
+int * readFile(const char* nombreArchivo, int *numeroPaginas, int arrValores[]){
+    
+    int numbers[100];
+    int i = 0;
+        
+    FILE *file = fopen(nombreArchivo, "r");
+    if(file == NULL){
+
+        printf("Error en funcion readFile() no pudo leer archivo %s \n",nombreArchivo);
+        exit(0);
+
+    }else{
+
+        while (fscanf(file, "%d", &numbers[i]) != EOF){
+            i++;            
+        }
+        fclose(file);    
+        numbers[i] = '\0';    
+
+    }             
+    arrValores = numbers;    
+    for (i = 0; arrValores[i] != '\0'; i++)
+            printf("%d\n", arrValores[i]);
+    (*numeroPaginas) = i; //Se asigna i al numero de paginas para que pueda ser leido desde main.          
+
+    return arrValores;
 }
 
 
@@ -92,27 +143,6 @@ void LRUAlgoritmo(int marcos){
     }
     printf("\nNumero total de fallos:\t%d\n", page_fault);
     //return 0;    
-}
-
-void readFile(const char* nombreArchivo, int *numeroPaginas, int *arrValores){
-    
-    int numbers[100];
-    int i = 0;
-        
-    FILE *file = fopen(nombreArchivo, "r");
-    if(file == NULL){
-        printf("Error en funcion leerArchivo() no pudo leer archivo %s \n",nombreArchivo);
-        exit(0);
-    }else{
-
-        while (fscanf(file, "%d", &numbers[i]) != EOF){
-            i++;            
-        }
-        fclose(file);        
-
-    }     
-    
-    (*numeroPaginas) = i; //Se asigna i al numero de paginas para que pueda ser leido desde main.       
 }
 
 void recibirArgumentos(int argc, char *argv[], int *c,const char** i,const char** o, int *flag){

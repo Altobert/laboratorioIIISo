@@ -10,7 +10,8 @@ int main(int argc, char *argv[]){
 
 	//Variables que ingresaran por consola
 	int c = 0, flag = 0, numeroPaginas=0;
-	int arrValores[100];
+	int arrValores[]={};
+	int *n;  
 	//i nombre archivo entrada
 	//o nombre archivo salida
 	const char* i=0;
@@ -23,9 +24,19 @@ int main(int argc, char *argv[]){
 	printf("%s\n",o);
 		
 	//Leer archivo
-	readFile(i, &numeroPaginas, arrValores);
+	//n = readFile(i, &numeroPaginas, arrValores);
+	/*for(int i=0;i<22;i++){  
+        printf("%d\n", n[i]);  
+    }*/ 
+	int tamanio = 1024;
+	float *visibilidades    = (float*)malloc(sizeof(float)*tamanio);
+	float *visibilidadesOut = (float*)malloc(sizeof(float)*tamanio);
+	leerArchivo(i, visibilidades, tamanio);
+	visibilidadesOut = obtenerDatos(visibilidades, tamanio);
 
-	printf("%d\n",numeroPaginas);
+	escribirArchivo(o, visibilidadesOut, tamanio);
+
+	//printf("%d\n",numeroPaginas);
 		
 	//Algoritmo LRU	
 	LRUAlgoritmo(c);
