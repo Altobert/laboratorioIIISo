@@ -20,4 +20,7 @@ void FIFOAlgoritmo(int marcos);
 // Algoritmo OPT
 void OPTAlgoritmo(int marcos);
 
+// Algoritmo CLOCK
+void CLOCKAlgoritmo(int marcos);
+
 #endif
