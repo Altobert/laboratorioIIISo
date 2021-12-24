@@ -102,6 +102,10 @@ void OPTAlgoritmo(int marcos) {
 
 }
 
+void CLOCKAlgoritmo(int marcos) {
+
+}
+
 void readFile(const char* nombreArchivo, int *numeroPaginas, int *arrValores){
     
     int numbers[100];
