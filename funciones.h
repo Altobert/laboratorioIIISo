@@ -17,4 +17,7 @@ void LRUAlgoritmo(int marcos);
 // Algoritmo FIFO
 void FIFOAlgoritmo(int marcos);
 
+// Algoritmo OPT
+void OPTAlgoritmo(int marcos);
+
 #endif
