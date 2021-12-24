@@ -14,4 +14,7 @@ void readFile(const char* nombreArchivo, int *numeroPaginas, int *arrValores);
 //Algoritmo LRU
 void LRUAlgoritmo(int marcos);
 
+// Algoritmo FIFO
+void FIFOAlgoritmo(int marcos);
+
 #endif
