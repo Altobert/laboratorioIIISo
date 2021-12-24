@@ -94,6 +94,10 @@ void LRUAlgoritmo(int marcos){
     //return 0;    
 }
 
+void FIFOAlgoritmo(int marcos){
+
+}
+
 void readFile(const char* nombreArchivo, int *numeroPaginas, int *arrValores){
     
     int numbers[100];
