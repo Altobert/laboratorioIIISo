@@ -6,7 +6,7 @@
 void recibirArgumentos(int argc, char *argv[], int *c,const char** i,const char** o, int *flag);
 
 //Cabecera de funcion leer archivo
-void leerArchivo(const char* fileName, float * out, int len);
+void leerArchivo(const char* fileName, float * out, int len, int *numeroPaginas);
 
 float *obtenerDatos(float* visible, int largo);
 
@@ -16,15 +16,15 @@ void escribirArchivo(const char* fileName, float* out, int len);
 int * readFile(const char* nombreArchivo, int *numeroPaginas, int arrValores[]);
 
 //Algoritmo LRU
-void LRUAlgoritmo(int marcos);
+void LRUAlgoritmo(int marcos, int cantidaPaginas);
 
 // Algoritmo FIFO
-void FIFOAlgoritmo(int marcos);
+void FIFOAlgoritmo(int marcos, int paginas[], int cantidaPaginas);
 
 // Algoritmo OPT
-void OPTAlgoritmo(int marcos);
+void OPTAlgoritmo(int marcos, int paginas[], int cantidaPaginas);
 
 // Algoritmo CLOCK
-void CLOCKAlgoritmo(int marcos);
+void CLOCKAlgoritmo(int marcos, int paginas[], int cantidaPaginas);
 
 #endif

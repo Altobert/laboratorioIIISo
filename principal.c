@@ -22,24 +22,23 @@ int main(int argc, char *argv[]){
 	
 	printf("%s\n",i);
 	printf("%s\n",o);
-		
-	//Leer archivo
-	//n = readFile(i, &numeroPaginas, arrValores);
-	/*for(int i=0;i<22;i++){  
-        printf("%d\n", n[i]);  
-    }*/ 
+
+			
 	int tamanio = 1024;
-	float *visibilidades    = (float*)malloc(sizeof(float)*tamanio);
-	float *visibilidadesOut = (float*)malloc(sizeof(float)*tamanio);
-	leerArchivo(i, visibilidades, tamanio);
+	int *visibilidades    = (float*)malloc(sizeof(float)*tamanio);
+	int *visibilidadesOut = (float*)malloc(sizeof(float)*tamanio);
+	
+	leerArchivo(i, visibilidades, tamanio, &numeroPaginas);
+	printf("Paginas desde main: %d\n",numeroPaginas);
+
 	visibilidadesOut = obtenerDatos(visibilidades, tamanio);
 
 	escribirArchivo(o, visibilidadesOut, tamanio);
 
-	//printf("%d\n",numeroPaginas);
+	
 		
 	//Algoritmo LRU	
-	LRUAlgoritmo(c);
+	LRUAlgoritmo(c,numeroPaginas);
 
 	if(flag==1){
 		printf("Se utilizo flag -b\n");
