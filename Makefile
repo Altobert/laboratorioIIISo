@@ -24,6 +24,7 @@ $(depends) : $(salida_source) $(salida_headers)
 
 clear :
 	$(RM) $(salida_out) $(salida_objects) $(zipfile) $(depends)
+	rm salida.txt
 
 .PHONY : build zip clean
 
