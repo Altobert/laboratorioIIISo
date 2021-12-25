@@ -5,6 +5,7 @@
 
 //Funcion encargada de leer archivo txt
 void leerArchivo(const char *fileName, float *out, int len, int *numeroPaginas){
+        
     //Abrir el archivo en modo lectura, no binario.
     FILE *fid = fopen(fileName, "r");
     int numbers[100];
@@ -25,7 +26,7 @@ void leerArchivo(const char *fileName, float *out, int len, int *numeroPaginas){
         }
         fclose(fid);
     }    
-    (*numeroPaginas)=i;
+    (*numeroPaginas)=i;        
     //Se lee el archivo, y se asigna a la variable out.
     //Automaticamente queda en nuestro arreglo la informacion correspondiente.
     fread(out, sizeof(float), len, fid);
@@ -34,16 +35,16 @@ void leerArchivo(const char *fileName, float *out, int len, int *numeroPaginas){
 
 }
 
-float *obtenerDatos(float *visible, int largo)
-{
+float *obtenerDatos(float* visible, int largo){
 
-    //Se crea un puntero float y se asigna memoria de forma dinamica.
-    float *realVector = (float *)malloc(largo * sizeof(float));
-
+    //Se crea un puntero float y se asigna memoria de forma dinamica.   
+    float *realVector = (float*) malloc(largo * sizeof(float));
+    
     //Se recorre solo las posiciones pares de *visible.
-    for (int i = 0, j = 0; i < 2; j++, i++){
-        
-        realVector[j] = visible[i];        
+    for(int i=0, j=0 ; i<2*largo ;j++, i+=2 ){
+        //Se asigna a arreglo dinamico solo los indices
+        //pares, por ende sus valores.
+        realVector[j]=visible[i];
     }
 
     return realVector;
@@ -58,36 +59,10 @@ void escribirArchivo(const char *fileName, float *out, int len)
     fclose(fid);
 }
 
-// int * readFile(const char* nombreArchivo, int *numeroPaginas, int arrValores[]){
-
-//     int numbers[100];
-//     int i = 0;
-
-//     FILE *file = fopen(nombreArchivo, "r");
-//     if(file == NULL){
-
-//         printf("Error en funcion readFile() no pudo leer archivo %s \n",nombreArchivo);
-//         exit(0);
-
-//     }else{
-
-//         while (fscanf(file, "%d", &numbers[i]) != EOF){
-//             i++;
-//         }
-//         fclose(file);
-//         numbers[i] = '\0';
-
-//     }
-//     arrValores = numbers;
-//     for (i = 0; arrValores[i] != '\0'; i++)
-//             printf("%d\n", arrValores[i]);
-//     (*numeroPaginas) = i; //Se asigna i al numero de paginas para que pueda ser leido desde main.
-
-//     return arrValores;
-// }
 
 void LRUAlgoritmo(int marcos, int cantidaPaginas){
-    printf("%d, %d\n",marcos, cantidaPaginas);
+
+    printf("LRU %d, %d\n",marcos, cantidaPaginas);
     int frames[10], temp[10], pages[10];    
     int total_pages, m, n, position, k, l, total_marcos;
     int a = 0, b = 0, page_fault = 0;
@@ -399,16 +374,16 @@ void recibirArgumentos(int argc, char *argv[], int *c, const char **i, const cha
 
     int flags, opt;
     char *auxC = NULL;
-    char *auxI = NULL;
-    char *auxO = NULL;
+    //char *auxI = NULL;
+    //char *auxO = NULL;
 
     /*
 		Se crea espacio de memoria para cada variable recibida por consola.
 		Tambien es casteada a tipo de dato entero.
 	*/
     auxC = malloc(10 * sizeof(char));
-    auxI = malloc(10 * sizeof(char));
-    auxO = malloc(10 * sizeof(char));
+    //auxI = malloc(10 * sizeof(char));
+    //auxO = malloc(10 * sizeof(char));
 
     if (argc < 3)
     { //si se ingresa un numero de argumentos menor a 3, se finaliza la ejecucion del programa

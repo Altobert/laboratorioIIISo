@@ -10,7 +10,7 @@ int main(int argc, char *argv[]){
 
 	//Variables que ingresaran por consola
 	int c = 0, flag = 0, numeroPaginas=0;
-	int arrValores[]={};
+	//int arrValores[]={};
 	//int *n;  
 	//i nombre archivo entrada
 	//o nombre archivo salida
@@ -26,13 +26,14 @@ int main(int argc, char *argv[]){
 
 			
 	int tamanio = 1024;
-	int *visibilidades    = (float*)malloc(sizeof(float)*tamanio);
-	int *visibilidadesOut = (float*)malloc(sizeof(float)*tamanio);
+	
+	float *visibilidades    = (float*)malloc(sizeof(float)*tamanio);
+	float *visibilidadesOut = (float*)malloc(sizeof(float)*tamanio);
 	
 	leerArchivo(i, visibilidades, tamanio, &numeroPaginas);
 		
 	visibilidadesOut = obtenerDatos(visibilidades, tamanio);
-
+	
 	printf("paginas desde main: %d\n",numeroPaginas);
 
 	escribirArchivo(o, visibilidadesOut, tamanio);
@@ -43,14 +44,8 @@ int main(int argc, char *argv[]){
 		printf("Se utilizo flag -b\n");
 		
 	}
-
-	/*
-
-	if(flag==1){
-		printf("Se utilizo flag -b\n");
-		
-	}
-	*/
+	free(visibilidades);
+	free(visibilidadesOut);
 	return 0;
 
 }

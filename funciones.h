@@ -8,9 +8,10 @@ void recibirArgumentos(int argc, char *argv[], int *c,const char** i,const char*
 //Cabecera de funcion leer archivo
 void leerArchivo(const char* fileName, float * out, int len, int *numeroPaginas);
 
-float *obtenerDatos(float* visible, int largo);
+//Cabecera de funcion obtenerDatos
+float *obtenerDatos(float * visible, int largo);
 
-void escribirArchivo(const char* fileName, float* out, int len);
+void escribirArchivo(const char* fileName, float * out, int len);
 
 //Cabecera de funcion encargada de leer archivo
 int * readFile(const char* nombreArchivo, int *numeroPaginas, int arrValores[]);

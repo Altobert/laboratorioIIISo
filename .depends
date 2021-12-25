@@ -1,0 +1,2 @@
+funciones.o: funciones.c
+principal.o: principal.c funciones.h
