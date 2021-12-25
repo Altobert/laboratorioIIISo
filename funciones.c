@@ -7,10 +7,19 @@
 void leerArchivo(const char* fileName, float * out, int len){
     //Abrir el archivo en modo binario
     FILE* fid = fopen(fileName, "r");
+    int numbers[100];
+    int i =0;
     if(fid == NULL){
         printf("Error en funcion leerArchivo() no pudo leer archivo %s \n",fileName);
         exit(0);
+    }else{
+
+        while (fscanf(fid, "%d", &numbers[i]) != EOF){
+            i++;            
+        }
+        fclose(fid);           
     }
+    printf("Numero valores leidos %d \n",i);
     //Se lee el archivo, y se asigna a la variable out.
     //Automaticamente queda en nuestro arreglo la informacion correspondiente. 
     fread(out, sizeof(float),len, fid);
@@ -24,10 +33,13 @@ float *obtenerDatos(float* visible, int largo){
     float *realVector = (float*) malloc(largo * sizeof(float));
     
     //Se recorre solo las posiciones pares de *visible.
-    for(int i=0, j=0 ; i<2;j++, i+=2 ){
+    for(int i=0, j=0 ; i<2;j++, i++ ){
         //Se asigna a arreglo dinamico solo los indices
         //pares, por ende sus valores.
+        
         realVector[j]=visible[i];
+        printf("%.2f\n",realVector[j]);
+
     }
 
     return realVector;
