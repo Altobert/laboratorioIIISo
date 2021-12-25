@@ -146,7 +146,7 @@ void LRUAlgoritmo(int marcos){
 }
 
 void FIFOAlgoritmo(int marcos){
-
+    printf("%d", marcos);
 }
 
 void OPTAlgoritmo(int marcos) {
@@ -201,8 +201,8 @@ void recibirArgumentos(int argc, char *argv[], int *c,const char** i,const char*
 		//Debe ser 3, porque el nombre del programa se considera como un argumento, siendo -h y el valor que acompañe a -h los dos argumentos faltantes. No se considera -m (que seria el cuarto argumento) porque es un flag que puede ser especificado por el usuario o no
 		printf("Se ingreso un numero incorrecto de argumentos\n");
 		fprintf(stderr, "Uso correcto: %s [-h numero entero] [-m]\n",
-				   argv[0]);
-		   exit(EXIT_FAILURE);
+		argv[0]);
+		exit(EXIT_FAILURE);
 	}
 
 	//Se inicializan variables con el fin de no tener fallos por punteros en malas condiciones.	
@@ -223,44 +223,42 @@ void recibirArgumentos(int argc, char *argv[], int *c,const char** i,const char*
 	while((opt = getopt(argc, argv, "bo:i:c:")) != -1) { 
 	   //opt recibe el argumento leido (se hace de forma secuencial) y se ingresa a un switch
 	   //En caso de que opt sea -1, se dejaran de buscar entradas y por lo tanto se podrá salir del while
-	   switch(opt) {
-	   
-	   case 'b'://se busca la entrada -m, en caso de ser encontrado se setea el valor flags = 1, no se considera lo que se ingrese despues del flag -m
-		   flags = 1;
-		   break;
-       
-	   case 'c'://se busca la entrada -c	   			   		
+	    switch(opt) {
+	    case 'b'://se busca la entrada -m, en caso de ser encontrado se setea el valor flags = 1, no se considera lo que se ingrese despues del flag -m
+		    flags = 1;
+		    break;
+	    case 'c'://se busca la entrada -c	   			   		
             C = strtol(optarg, &auxC, 10);//se parsea el argumento ingresado junto al flag -h a entero
 			if(optarg!=0 && C==0){//si no se ingresa un argumento junto a -h o si no se logra parsear el argumento ingresado, se considera como invalido
 				fprintf(stderr, "Uso correcto: %s [-c numero entero]\n", argv[0]); 
 				exit(EXIT_FAILURE);
 		    }	   		
-		   break;		   
+		    break;		   
 
-	   case 'i': //se busca la entrada -h
+	    case 'i': //se busca la entrada -h
 		   //I = strtol(optarg, &auxI, 10);//se parsea el argumento ingresado junto al flag -h a entero
-           printf("Input file i: \"%s\"\n", optarg);
-           I = optarg;
-		   if(optarg!=0 && I==0){//si no se ingresa un argumento junto a -h o si no se logra parsear el argumento ingresado, se considera como invalido
+            printf("Input file i: \"%s\"\n", optarg);
+            I = optarg;
+		    if(optarg!=0 && I==0){//si no se ingresa un argumento junto a -h o si no se logra parsear el argumento ingresado, se considera como invalido
 				fprintf(stderr, "Uso correcto: %s [-h numero entero] [-m]\n", argv[0]); 
 				exit(EXIT_FAILURE);
-		   }
-		   break;
+		    }
+		    break;
 
 		case 'o': //se busca la entrada -u
-		   //O = strtol(optarg, &auxO, 10);//se parsea el argumento ingresado junto al flag -h a entero
-           printf("Input file o: \"%s\"\n", optarg);
-           O = optarg;
-		   if(optarg!=0 && O==0){//si no se ingresa un argumento junto a -h o si no se logra parsear el argumento ingresado, se considera como invalido
+		    //O = strtol(optarg, &auxO, 10);//se parsea el argumento ingresado junto al flag -h a entero
+            printf("Input file o: \"%s\"\n", optarg);
+            O = optarg;
+		    if(optarg!=0 && O==0){//si no se ingresa un argumento junto a -h o si no se logra parsear el argumento ingresado, se considera como invalido
 				fprintf(stderr, "Uso correcto: %s [-h numero entero] [-m]\n", argv[0]); 
 				exit(EXIT_FAILURE);
-		   }
-		   break;
+		    }
+		    break;
 				
-	   default: /* '?' */
-		   fprintf(stderr, "Uso correcto: %s [-h numero entero] [-m]\n", argv[0]);
-		   exit(EXIT_FAILURE);
-	   }
+	    default: /* '?' */
+		    fprintf(stderr, "Uso correcto: %s [-h numero entero] [-m]\n", argv[0]);
+		    exit(EXIT_FAILURE);
+	    }
 	}
 
 	if(flags==1){//si se encontro un flag -m, se setea la variable global flag = 1, respecto al scope del proceso principal
