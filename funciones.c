@@ -10,13 +10,12 @@ void leerArchivo(const char *fileName, float *out, int len, int *numeroPaginas){
     FILE *fid = fopen(fileName, "r");
     int numbers[100];
     int i = 0;
-    if (fid == NULL)
-    {
+    if (fid == NULL){
+
         printf("Error en funcion leerArchivo() no pudo leer archivo %s \n", fileName);
         exit(0);
     }
-    else
-    {
+    else{
 
         while (fscanf(fid, "%d", &numbers[i]) != EOF){
             i++;
@@ -60,27 +59,21 @@ void escribirArchivo(const char *fileName, float *out, int len)
 }
 
 
-void LRUAlgoritmo(int marcos, int cantidaPaginas){
+void LRUAlgoritmo(int marcos, int pages[], int cantidaPaginas){
 
     printf("LRU %d, %d\n",marcos, cantidaPaginas);
-    int frames[10], temp[10], pages[10];    
-    int total_pages, m, n, position, k, l, total_marcos;
+    //int frames[10], temp[10], pages[10];    
+    int frames[10], temp[10];    
+    int m, n, position, k, l, total_marcos;
     int a = 0, b = 0, page_fault = 0;
     total_marcos  = marcos;
-     
+    int total_pages = cantidaPaginas; 
 
     for (m = 0; m < total_marcos; m++)
     {
         frames[m] = -1;
     }
-    printf("Ingrese numero total de paginas:\t");
-    scanf("%d", &total_pages);
-    printf("Ingrese los valores referenciados:\n");
-    for (m = 0; m < total_pages; m++)
-    {
-        printf("Value No.[%d]:\t", m + 1);
-        scanf("%d", &pages[m]);
-    }
+    
     for (n = 0; n < total_pages; n++)
     {
 

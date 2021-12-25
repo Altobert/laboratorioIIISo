@@ -17,7 +17,7 @@ void escribirArchivo(const char* fileName, float * out, int len);
 int * readFile(const char* nombreArchivo, int *numeroPaginas, int arrValores[]);
 
 //Algoritmo LRU
-void LRUAlgoritmo(int marcos, int cantidaPaginas);
+void LRUAlgoritmo(int marcos, int paginas[], int cantidaPaginas);
 
 // Algoritmo FIFO
 void FIFOAlgoritmo(int marcos, int paginas[], int cantidaPaginas);
