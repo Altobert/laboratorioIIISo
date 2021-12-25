@@ -28,8 +28,13 @@ int main(int argc, char *argv[]){
 	int *visibilidades    = (float*)malloc(sizeof(float)*tamanio);
 	int *visibilidadesOut = (float*)malloc(sizeof(float)*tamanio);
 	
-	leerArchivo(i, visibilidades, tamanio, &numeroPaginas);
+	n = leerArchivo(i, visibilidades, tamanio, &numeroPaginas);
+	
 	printf("Paginas desde main: %d\n",numeroPaginas);
+
+	for (int a = 0; a < numeroPaginas; ++a){
+        printf("%d\n", n[a]);
+    }
 
 	visibilidadesOut = obtenerDatos(visibilidades, tamanio);
 

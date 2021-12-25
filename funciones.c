@@ -4,11 +4,10 @@
 #include <stdlib.h>
 
 //Funcion encargada de leer archivo txt
-void leerArchivo(const char *fileName, float *out, int len, int *numeroPaginas)
-{
+void leerArchivo(const char *fileName, float *out, int len, int *numeroPaginas){
     //Abrir el archivo en modo lectura, no binario.
     FILE *fid = fopen(fileName, "r");
-    int numbers[100];
+    int numbers[]={};
     int i = 0;
     if (fid == NULL)
     {
@@ -18,10 +17,11 @@ void leerArchivo(const char *fileName, float *out, int len, int *numeroPaginas)
     else
     {
 
-        while (fscanf(fid, "%d", &numbers[i]) != EOF)
-        {
+        while (fscanf(fid, "%d", &numbers[i]) != EOF){
             i++;
-            if (i == 99) { break; } /* Validacion de numero de paginas como limite. */
+            if (i == 99) { 
+                break;
+            } /* Validacion de numero de paginas como limite. */
         }
         fclose(fid);
     }
@@ -32,6 +32,8 @@ void leerArchivo(const char *fileName, float *out, int len, int *numeroPaginas)
     fread(out, sizeof(float), len, fid);
     //Se cierra el archivo
     fclose(fid);
+
+    return numbers;
 }
 
 float *obtenerDatos(float *visible, int largo)
@@ -41,13 +43,9 @@ float *obtenerDatos(float *visible, int largo)
     float *realVector = (float *)malloc(largo * sizeof(float));
 
     //Se recorre solo las posiciones pares de *visible.
-    for (int i = 0, j = 0; i < 2; j++, i++)
-    {
-        //Se asigna a arreglo dinamico solo los indices
-        //pares, por ende sus valores.
-
-        realVector[j] = visible[i];
-        printf("%.2f\n", realVector[j]);
+    for (int i = 0, j = 0; i < 2; j++, i++){
+        
+        realVector[j] = visible[i];        
     }
 
     return realVector;
