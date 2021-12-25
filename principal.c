@@ -10,7 +10,7 @@ int main(int argc, char *argv[]){
 
 	//Variables que ingresaran por consola
 	//int c = 0, flag = 0, numeroPaginas=0;
-	int c = 0, flag = 0;
+	int marcos = 0, flag = 0;
 	
 	//i nombre archivo entrada
 	//o nombre archivo salida
@@ -22,9 +22,9 @@ int main(int argc, char *argv[]){
 
     printf("Laboratorio III Sistemas Operativos \n");
 	
-	recibirArgumentos(argc, argv, &c, &i, &o, &flag);
+	recibirArgumentos(argc, argv, &marcos, &i, &o, &flag);
 	
-	printf("%d\n",c);
+	printf("%d\n",marcos);
 	printf("%s\n",i);
 	printf("%s\n",o);	
 
@@ -47,9 +47,14 @@ int main(int argc, char *argv[]){
 		if (cantidad == 99) { break; } /* 99 pagias es un limite */
 	}
 
-	
+	//LRU
+	printf("--------------------------------\n");
+	printf("Algoritmo LRU\n");	
+	LRUAlgoritmo(marcos,paginas,cantidad);
 
-	LRUAlgoritmo(c,paginas,cantidad);
+	printf("--------------------------------\n");
+	printf("Algoritmo OPT\n");	
+	OPTAlgoritmo(marcos,paginas,cantidad);
 
 	if(flag==1){
 		printf("Se utilizo flag -b\n");

@@ -20,7 +20,7 @@ int * readFile(const char* nombreArchivo, int *numeroPaginas, int arrValores[]);
 void LRUAlgoritmo(int marcos, int paginas[], int cantidaPaginas);
 
 // Algoritmo FIFO
-void FIFOAlgoritmo(int marcos, int paginas[], int cantidaPaginas);
+void FIFOAlgoritmo(int marcos, int pages[], int cantidaPaginas);
 
 // Algoritmo OPT
 void OPTAlgoritmo(int marcos, int paginas[], int cantidaPaginas);

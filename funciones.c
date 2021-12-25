@@ -63,10 +63,13 @@ void LRUAlgoritmo(int marcos, int pages[], int cantidaPaginas){
 
     printf("LRU %d, %d\n",marcos, cantidaPaginas);
     //int frames[10], temp[10], pages[10];    
+    //int temp[10];
     int frames[10], temp[10];    
     int m, n, position, k, l, total_marcos;
     int a = 0, b = 0, page_fault = 0;
+
     total_marcos  = marcos;
+
     int total_pages = cantidaPaginas; 
 
     for (m = 0; m < total_marcos; m++)
@@ -129,120 +132,20 @@ void LRUAlgoritmo(int marcos, int pages[], int cantidaPaginas){
             printf("%d\t", frames[m]);
         }
     }
-    printf("\nNumero total de fallos:\t%d\n", page_fault);
-    //return 0;
+    printf("\nNumero total de miss:\t%d\n", page_fault);    
 }
 
-void FIFOAlgoritmo(int marcos)
-{
-    printf("%d", marcos);
-    int reference_string[25], frames[25], interval[25];
-    int pages, total_frames, page_faults = 0;
-    int m, n, temp, flag, found;
-    int position, maximum_interval, previous_frame = -1;
-    printf("\nEnter Total Number of Pages:\t");
-    scanf("%d", &pages);
-    printf("\nEnter Values of Reference String\n");
-    for (m = 0; m < pages; m++)
-    {
-        printf("Value No.[%d]:\t", m + 1);
-        scanf("%d", &reference_string[m]);
-    }
-    printf("\nEnter Total Number of Frames:\t");
-    scanf("%d", &total_frames);
-    for (m = 0; m < total_frames; m++)
-    {
-        frames[m] = -1;
-    }
-    for (m = 0; m < pages; m++)
-    {
-        flag = 0;
-        for (n = 0; n < total_frames; n++)
-        {
-            if (frames[n] == reference_string[m])
-            {
-                flag = 1;
-                printf("\t");
-                break;
-            }
-        }
-        if (flag == 0)
-        {
-            if (previous_frame == total_frames - 1)
-            {
-                for (n = 0; n < total_frames; n++)
-                {
-                    for (temp = m + 1; temp < pages; temp++)
-                    {
-                        interval[n] = 0;
-                        if (frames[n] == reference_string[temp])
-                        {
-                            interval[n] = temp - m;
-                            break;
-                        }
-                    }
-                }
-                found = 0;
-                for (n = 0; n < total_frames; n++)
-                {
-                    if (interval[n] == 0)
-                    {
-                        position = n;
-                        found = 1;
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                position = ++previous_frame;
-                found = 1;
-            }
-            if (found == 0)
-            {
-                maximum_interval = interval[0];
-                position = 0;
-                for (n = 1; n < total_frames; n++)
-                {
-                    if (maximum_interval < interval[n])
-                    {
-                        maximum_interval = interval[n];
-                        position = n;
-                    }
-                }
-            }
-            frames[position] = reference_string[m];
-            printf("FAULT\t");
-            page_faults++;
-        }
-        for (n = 0; n < total_frames; n++)
-        {
-            if (frames[n] != -1)
-            {
-                printf("%d\t", frames[n]);
-            }
-        }
-        printf("\n");
-    }
-    printf("\nTotal Number of Page Faults:\t%d\n", page_faults);
+void FIFOAlgoritmo(int marcos, int pages[], int cantidaPaginas){
+
+    
 }
 
-void OPTAlgoritmo(int marcos)
-{
+void OPTAlgoritmo(int marcos, int pages[], int cantidaPaginas){
 
-    int no_of_frames, no_of_pages, frames[10], pages[30], temp[10], flag1, flag2, flag3, i, j, k, pos, max, faults = 0;
-    printf("Enter number of frames: ");
-    scanf("%d", &no_of_frames);
+    int frames[10], temp[10], flag1, flag2, flag3, i, j, k, pos, max, faults = 0;
 
-    printf("Enter number of pages: ");
-    scanf("%d", &no_of_pages);
-
-    printf("Enter page reference string: ");
-
-    for (i = 0; i < no_of_pages; ++i)
-    {
-        scanf("%d", &pages[i]);
-    }
+    int no_of_frames = marcos;
+    int no_of_pages  = cantidaPaginas;
 
     for (i = 0; i < no_of_frames; ++i)
     {
@@ -330,7 +233,7 @@ void OPTAlgoritmo(int marcos)
         }
     }
 
-    printf("\n\nTotal Page Faults = %d", faults);
+    printf("\n\nTotal de miss = %d\n", faults);
 }
 
 void CLOCKAlgoritmo(int marcos)
