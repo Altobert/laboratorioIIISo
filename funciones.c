@@ -259,7 +259,6 @@ void FIFOAlgoritmo(int marcos)
         printf("\n");
     }
     printf("\nTotal Number of Page Faults:\t%d\n", page_faults);
-    return 0;
 }
 
 void OPTAlgoritmo(int marcos)
