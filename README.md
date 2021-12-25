@@ -8,4 +8,5 @@ Estimada Profesora Marcela
 
 El inicio del programa es de la siguiente forma:
 
-./salida -c 10 -i 9 -o 20
+./politica -c 2 -i "entrada.txt" -o"salida.txt"
+
