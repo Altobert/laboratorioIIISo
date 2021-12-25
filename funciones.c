@@ -7,7 +7,7 @@
 void leerArchivo(const char *fileName, float *out, int len, int *numeroPaginas){
     //Abrir el archivo en modo lectura, no binario.
     FILE *fid = fopen(fileName, "r");
-    int numbers[]={};
+    int numbers[100];
     int i = 0;
     if (fid == NULL)
     {
@@ -24,16 +24,14 @@ void leerArchivo(const char *fileName, float *out, int len, int *numeroPaginas){
             } /* Validacion de numero de paginas como limite. */
         }
         fclose(fid);
-    }
-    (*numeroPaginas) = i; // Se agrega para ser leido en main.
-    
+    }    
+    (*numeroPaginas)=i;
     //Se lee el archivo, y se asigna a la variable out.
     //Automaticamente queda en nuestro arreglo la informacion correspondiente.
     fread(out, sizeof(float), len, fid);
     //Se cierra el archivo
     fclose(fid);
 
-    return numbers;
 }
 
 float *obtenerDatos(float *visible, int largo)
@@ -89,7 +87,7 @@ void escribirArchivo(const char *fileName, float *out, int len)
 // }
 
 void LRUAlgoritmo(int marcos, int cantidaPaginas){
-
+    printf("%d, %d\n",marcos, cantidaPaginas);
     int frames[10], temp[10], pages[10];    
     int total_pages, m, n, position, k, l, total_marcos;
     int a = 0, b = 0, page_fault = 0;

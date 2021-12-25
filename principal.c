@@ -11,7 +11,7 @@ int main(int argc, char *argv[]){
 	//Variables que ingresaran por consola
 	int c = 0, flag = 0, numeroPaginas=0;
 	int arrValores[]={};
-	int *n;  
+	//int *n;  
 	//i nombre archivo entrada
 	//o nombre archivo salida
 	const char* i=0;
@@ -20,34 +20,37 @@ int main(int argc, char *argv[]){
 	
 	recibirArgumentos(argc, argv, &c, &i, &o, &flag);
 	
+	printf("%d\n",c);
 	printf("%s\n",i);
-	printf("%s\n",o);
+	printf("%s\n",o);	
 
 			
 	int tamanio = 1024;
 	int *visibilidades    = (float*)malloc(sizeof(float)*tamanio);
 	int *visibilidadesOut = (float*)malloc(sizeof(float)*tamanio);
 	
-	n = leerArchivo(i, visibilidades, tamanio, &numeroPaginas);
-	
-	printf("Paginas desde main: %d\n",numeroPaginas);
-
-	for (int a = 0; a < numeroPaginas; ++a){
-        printf("%d\n", n[a]);
-    }
-
+	leerArchivo(i, visibilidades, tamanio, &numeroPaginas);
+		
 	visibilidadesOut = obtenerDatos(visibilidades, tamanio);
+
+	printf("paginas desde main: %d\n",numeroPaginas);
 
 	escribirArchivo(o, visibilidadesOut, tamanio);
 
-	
-		
-	//Algoritmo LRU	
 	LRUAlgoritmo(c,numeroPaginas);
 
 	if(flag==1){
 		printf("Se utilizo flag -b\n");
-		return 0;
+		
 	}
+
+	/*
+
+	if(flag==1){
+		printf("Se utilizo flag -b\n");
+		
+	}
+	*/
+	return 0;
 
 }
