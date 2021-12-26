@@ -4,46 +4,52 @@
 #include <stdlib.h>
 
 //Funcion encargada de leer archivo txt
-void leerArchivo(const char *fileName, float *out, int len, int *numeroPaginas){
-        
+void leerArchivo(const char *fileName, float *out, int len, int *numeroPaginas)
+{
+
     //Abrir el archivo en modo lectura, no binario.
     FILE *fid = fopen(fileName, "r");
     int numbers[100];
     int i = 0;
-    if (fid == NULL){
+    if (fid == NULL)
+    {
 
         printf("Error en funcion leerArchivo() no pudo leer archivo %s \n", fileName);
         exit(0);
     }
-    else{
+    else
+    {
 
-        while (fscanf(fid, "%d", &numbers[i]) != EOF){
+        while (fscanf(fid, "%d", &numbers[i]) != EOF)
+        {
             i++;
-            if (i == 99) { 
+            if (i == 99)
+            {
                 break;
             } /* Validacion de numero de paginas como limite. */
         }
         fclose(fid);
-    }    
-    (*numeroPaginas)=i;        
+    }
+    (*numeroPaginas) = i;
     //Se lee el archivo, y se asigna a la variable out.
     //Automaticamente queda en nuestro arreglo la informacion correspondiente.
     fread(out, sizeof(float), len, fid);
     //Se cierra el archivo
     fclose(fid);
-
 }
 
-float *obtenerDatos(float* visible, int largo){
+float *obtenerDatos(float *visible, int largo)
+{
 
-    //Se crea un puntero float y se asigna memoria de forma dinamica.   
-    float *realVector = (float*) malloc(largo * sizeof(float));
-    
+    //Se crea un puntero float y se asigna memoria de forma dinamica.
+    float *realVector = (float *)malloc(largo * sizeof(float));
+
     //Se recorre solo las posiciones pares de *visible.
-    for(int i=0, j=0 ; i<2*largo ;j++, i+=2 ){
+    for (int i = 0, j = 0; i < 2 * largo; j++, i += 2)
+    {
         //Se asigna a arreglo dinamico solo los indices
         //pares, por ende sus valores.
-        realVector[j]=visible[i];
+        realVector[j] = visible[i];
     }
 
     return realVector;
@@ -58,24 +64,24 @@ void escribirArchivo(const char *fileName, float *out, int len)
     fclose(fid);
 }
 
+void LRUAlgoritmo(int marcos, int pages[], int cantidaPaginas)
+{
 
-void LRUAlgoritmo(int marcos, int pages[], int cantidaPaginas){
+    printf("LRU %d, %d\n", marcos, cantidaPaginas);
 
-    printf("LRU %d, %d\n",marcos, cantidaPaginas);
-
-    int frames[10], temp[10];    
+    int frames[10], temp[10];
     int m, n, position, k, l, total_marcos;
     int a = 0, b = 0, page_fault = 0;
 
-    total_marcos  = marcos;
+    total_marcos = marcos;
 
-    int total_pages = cantidaPaginas; 
+    int total_pages = cantidaPaginas;
 
     for (m = 0; m < total_marcos; m++)
     {
         frames[m] = -1;
     }
-    
+
     for (n = 0; n < total_pages; n++)
     {
 
@@ -131,20 +137,50 @@ void LRUAlgoritmo(int marcos, int pages[], int cantidaPaginas){
             printf("%d\t", frames[m]);
         }
     }
-    printf("\nNumero total de miss:\t%d\n", page_fault);    
+    printf("\nNumero total de miss:\t%d\n", page_fault);
 }
 
-void FIFOAlgoritmo(int marcos, int pages[], int cantidaPaginas){
+void FIFOAlgoritmo(int marcos, int pages[], int cantidaPaginas)
+{
+    int i, j, n, frame[10], no, k, avail, count = 0;
+    //Cantidad de marcos
+    no = marcos;
+    //Cantidad de paginas
+    n = cantidaPaginas;
 
-    
+    for (i = 0; i < no; i++)
+        frame[i] = -1;
+    j = 0;
+
+    for (i = 1; i <= n; i++)
+    {
+        avail = 0;
+        for (k = 0; k < no; k++)
+            if (frame[k] == pages[i])
+                avail = 1;
+        if (avail == 0)
+        {
+            frame[j] = pages[i];
+            j = (j + 1) % no;
+            count++;
+            for (k = 0; k < no; k++)
+                printf("%d\t", frame[k]);
+        }
+        printf("\n");
+    }
+    printf("\nNumero total de miss:\t%d\n", count);
 }
 
-void OPTAlgoritmo(int marcos, int pages[], int cantidaPaginas){
+void OPTAlgoritmo(int marcos, int pages[], int cantidaPaginas)
+{
 
     int frames[10], temp[10], flag1, flag2, flag3, i, j, k, pos, max, faults = 0;
 
+    //cantidad de marcos
     int no_of_frames = marcos;
-    int no_of_pages  = cantidaPaginas;
+
+    //cantidad de paginas
+    int no_of_pages = cantidaPaginas;
 
     for (i = 0; i < no_of_frames; ++i)
     {
@@ -238,42 +274,53 @@ void OPTAlgoritmo(int marcos, int pages[], int cantidaPaginas){
 void CLOCKAlgoritmo(int marcos, int pages[], int cantidaPaginas)
 {
     int frames[marcos], use[marcos], fault, locat, found, i, j;
-	for(i=0; i<marcos; i++) { /* Se inicializa en cero los elementos del arreglo */
-		frames[i]=0;
-		use[i]=0;
-	}
-	fault=0;
-	locat=0;
-	for(i=0; i<cantidaPaginas; i++) {
-		found=0; /* Reset */
-		for(j=0; j<marcos; j++) { /* Se revisa si la pagina esta en memoria */
-			if(pages[i]==frames[j]) {
-				found=1;
-				use[j]=1;
-			}
-		}
-		if(found==0) {
-			do { /* Si bit es cero o nulo se carga en pagina */
-				if(use[locat]==0) {
-					frames[locat]=pages[i];
-					use[locat]=1;
-					found=1;
-					fault++;
-				}
-				else { /* Se resetea el uso del bit */
-					use[locat]=0;
-				}
-				locat++; /* Se mueve puntero */
-				if(locat==marcos) { locat=0; } /* Reset */
-			} while (found!=1);
+    for (i = 0; i < marcos; i++)
+    { /* Se inicializa en cero los elementos del arreglo */
+        frames[i] = 0;
+        use[i] = 0;
+    }
+    fault = 0;
+    locat = 0;
+    for (i = 0; i < cantidaPaginas; i++)
+    {
+        found = 0; /* Reset */
+        for (j = 0; j < marcos; j++)
+        { /* Se revisa si la pagina esta en memoria */
+            if (pages[i] == frames[j])
+            {
+                found = 1;
+                use[j] = 1;
+            }
+        }
+        if (found == 0)
+        {
+            do
+            { /* Si bit es cero o nulo se carga en pagina */
+                if (use[locat] == 0)
+                {
+                    frames[locat] = pages[i];
+                    use[locat] = 1;
+                    found = 1;
+                    fault++;
+                }
+                else
+                { /* Se resetea el uso del bit */
+                    use[locat] = 0;
+                }
+                locat++; /* Se mueve puntero */
+                if (locat == marcos)
+                {
+                    locat = 0;
+                } /* Reset */
+            } while (found != 1);
 
-            for (j = 0; j < marcos; ++j){
+            for (j = 0; j < marcos; ++j)
+            {
                 printf("%d\t", frames[j]);
             }
-		}
-        
-	}
-	printf("\nNumero de miss : %d\n", fault);
+        }
+    }
+    printf("\nNumero de miss : %d\n", fault);
 }
 
 void readFile(const char *nombreArchivo, int *numeroPaginas, int *arrValores)
@@ -306,17 +353,15 @@ void recibirArgumentos(int argc, char *argv[], int *c, const char **i, const cha
 
     int flags, opt;
     char *auxC = NULL;
-    //char *auxI = NULL;
-    //char *auxO = NULL;
+    
 
     /*
 		Se crea espacio de memoria para cada variable recibida por consola.
 		Tambien es casteada a tipo de dato entero.
 	*/
     auxC = malloc(10 * sizeof(char));
-    //auxI = malloc(10 * sizeof(char));
-    //auxO = malloc(10 * sizeof(char));
-
+    
+    
     if (argc < 3)
     { //si se ingresa un numero de argumentos menor a 3, se finaliza la ejecucion del programa
         //Debe ser 3, porque el nombre del programa se considera como un argumento, siendo -h y el valor que acompañe a -h los dos argumentos faltantes. No se considera -m (que seria el cuarto argumento) porque es un flag que puede ser especificado por el usuario o no
