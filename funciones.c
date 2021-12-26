@@ -268,7 +268,9 @@ void OPTAlgoritmo(int marcos, int pages[], int cantidaPaginas)
         }
     }
 
-    printf("\n\nTotal de miss = %d\n", faults);
+    float miss_rate = ((float)count/(float)cantidaPaginas)*100;
+    printf("\n\nTotal de miss = %d\n", count);
+    printf("Tasa miss: %2.2f%%\n", (float)miss_rate);
 }
 
 void CLOCKAlgoritmo(int marcos, int pages[], int cantidaPaginas)
@@ -320,7 +322,10 @@ void CLOCKAlgoritmo(int marcos, int pages[], int cantidaPaginas)
             }
         }
     }
-    printf("\nNumero de miss : %d\n", fault);
+
+    float miss_rate = ((float)fault/(float)cantidaPaginas)*100;
+    printf("\n\nTotal de miss = %d\n", fault);
+    printf("Tasa miss: %2.2f%%\n", (float)miss_rate);
 }
 
 void readFile(const char *nombreArchivo, int *numeroPaginas, int *arrValores)
