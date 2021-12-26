@@ -8,6 +8,8 @@
 */
 int main(int argc, char *argv[]){
 
+	printf("Laboratorio III Sistemas Operativos \n");
+
 	//Variables que ingresaran por consola
 	//int c = 0, flag = 0, numeroPaginas=0;
 	int marcos = 0, flag = 0;
@@ -17,37 +19,31 @@ int main(int argc, char *argv[]){
 	const char* i=0;
 	const char* o=0;
 
-	//paginas
+	//paginas - valor por defecto inicial.
 	int paginas[100];
-
-    printf("Laboratorio III Sistemas Operativos \n");
-	
+    	
 	recibirArgumentos(argc, argv, &marcos, &i, &o, &flag);
 	
 	printf("%d\n",marcos);
 	printf("%s\n",i);
 	printf("%s\n",o);	
-
 			
-	/*
-	int tamanio = 1024;	
-	float *visibilidades    = (float*)malloc(sizeof(float)*tamanio);
-	float *visibilidadesOut = (float*)malloc(sizeof(float)*tamanio);	
-	leerArchivo(i, visibilidades, tamanio, &numeroPaginas);		
-	visibilidadesOut = obtenerDatos(visibilidades, tamanio);		
-	printf("paginas desde main: %d\n",numeroPaginas);
-	escribirArchivo(o, visibilidadesOut, tamanio);*/
-	//Lectura de archivo
-
-	FILE *file;
-	file = fopen(i, "r");
+	FILE *file = fopen(i, "r");
 	int cantidad=0;
-	while(fscanf(file,"%d",&paginas[cantidad]) != EOF) {
-		cantidad++;
-		if (cantidad == 99) { break; } /* 99 pagias es un limite */
+	if (file == NULL)
+    {
+        printf("Error en funcion leerArchivo() no pudo leer archivo %s \n", i);
+        exit(0);
+    }else{
+	
+		while(fscanf(file,"%d",&paginas[cantidad]) != EOF) {
+			cantidad++;
+			if (cantidad == 99) { break; } /* 99 pagias es un limite */
+		}
+		fclose(file);
 	}
+	
 
-	//LRU
 	printf("--------------------------------\n");
 	printf("Algoritmo LRU\n");	
 	LRUAlgoritmo(marcos,paginas,cantidad);
