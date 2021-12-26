@@ -62,8 +62,7 @@ void escribirArchivo(const char *fileName, float *out, int len)
 void LRUAlgoritmo(int marcos, int pages[], int cantidaPaginas){
 
     printf("LRU %d, %d\n",marcos, cantidaPaginas);
-    //int frames[10], temp[10], pages[10];    
-    //int temp[10];
+
     int frames[10], temp[10];    
     int m, n, position, k, l, total_marcos;
     int a = 0, b = 0, page_fault = 0;
@@ -236,8 +235,45 @@ void OPTAlgoritmo(int marcos, int pages[], int cantidaPaginas){
     printf("\n\nTotal de miss = %d\n", faults);
 }
 
-void CLOCKAlgoritmo(int marcos)
+void CLOCKAlgoritmo(int marcos, int pages[], int cantidaPaginas)
 {
+    int frames[marcos], use[marcos], fault, locat, found, i, j;
+	for(i=0; i<marcos; i++) { /* Se inicializa en cero los elementos del arreglo */
+		frames[i]=0;
+		use[i]=0;
+	}
+	fault=0;
+	locat=0;
+	for(i=0; i<cantidaPaginas; i++) {
+		found=0; /* Reset */
+		for(j=0; j<marcos; j++) { /* Se revisa si la pagina esta en memoria */
+			if(pages[i]==frames[j]) {
+				found=1;
+				use[j]=1;
+			}
+		}
+		if(found==0) {
+			do { /* Si bit es cero o nulo se carga en pagina */
+				if(use[locat]==0) {
+					frames[locat]=pages[i];
+					use[locat]=1;
+					found=1;
+					fault++;
+				}
+				else { /* Se resetea el uso del bit */
+					use[locat]=0;
+				}
+				locat++; /* Se mueve puntero */
+				if(locat==marcos) { locat=0; } /* Reset */
+			} while (found!=1);
+
+            for (j = 0; j < marcos; ++j){
+                printf("%d\t", frames[j]);
+            }
+		}
+        
+	}
+	printf("\nNumero de miss : %d\n", fault);
 }
 
 void readFile(const char *nombreArchivo, int *numeroPaginas, int *arrValores)

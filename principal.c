@@ -56,9 +56,12 @@ int main(int argc, char *argv[]){
 	printf("Algoritmo OPT\n");	
 	OPTAlgoritmo(marcos,paginas,cantidad);
 
+	printf("--------------------------------\n");
+	printf("Algoritmo CLOCK\n");	
+	CLOCKAlgoritmo(marcos,paginas,cantidad);
+
 	if(flag==1){
 		printf("Se utilizo flag -b\n");
-		
 	}
 	
 	return 0;
