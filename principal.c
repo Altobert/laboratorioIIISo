@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+
+float* faults_opt;
+
 #include "funciones.h"
 
 /*
@@ -42,15 +45,16 @@ int main(int argc, char *argv[]){
 		}
 		fclose(file);
 	}
+
 	
+	
+	printf("--------------------------------\n");
+	printf("Algoritmo OPT\n");	
+	OPTAlgoritmo(marcos,paginas,cantidad);
 
 	printf("--------------------------------\n");
 	printf("Algoritmo LRU\n");	
 	LRUAlgoritmo(marcos,paginas,cantidad);
-
-	printf("--------------------------------\n");
-	printf("Algoritmo OPT\n");	
-	OPTAlgoritmo(marcos,paginas,cantidad);
 
 	printf("--------------------------------\n");
 	printf("Algoritmo CLOCK\n");	

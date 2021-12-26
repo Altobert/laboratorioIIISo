@@ -3,6 +3,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+float faults_opt;
+
 //Funcion encargada de leer archivo txt
 void leerArchivo(const char *fileName, float *out, int len, int *numeroPaginas)
 {
@@ -160,9 +162,14 @@ void OPTAlgoritmo(int marcos, int pages[], int cantidaPaginas)
             printf("%d\t", frames[j]);
         }
     }
+
+    
+
     float miss_rate = ((float)faults/(float)cantidaPaginas)*100;
     printf("\n\nTotal de miss = %d\n", faults);
     printf("Tasa miss: %2.2f%%\n", (float)miss_rate);
+
+    faults_opt = faults;
 }
 
 
@@ -240,9 +247,10 @@ void LRUAlgoritmo(int marcos, int pages[], int cantidaPaginas)
         }
     }
 
-    float miss_rate = ((float)page_fault/(float)cantidaPaginas)*100;
+    float miss_rate = ((float)page_fault/(float)cantidaPaginas);
     printf("\n\nTotal de miss = %d\n", page_fault);
-    printf("Tasa miss: %2.2f%%\n", (float)miss_rate);
+    printf("Tasa miss: %2.2f%%\n", (float)miss_rate*100);
+    printf("%2.2f%% peor que el algoritmo óptimo\n", ((faults_opt/cantidaPaginas)-miss_rate)*100);
 }
 
 void FIFOAlgoritmo(int marcos, int pages[], int cantidaPaginas)
@@ -273,9 +281,10 @@ void FIFOAlgoritmo(int marcos, int pages[], int cantidaPaginas)
         }
         printf("\n");
     }
-    float miss_rate = ((float)count/(float)cantidaPaginas)*100;
+    float miss_rate = ((float)count/(float)cantidaPaginas);
     printf("\n\nTotal de miss = %d\n", count);
-    printf("Tasa miss: %2.2f%%\n", (float)miss_rate);
+    printf("Tasa miss: %2.2f%%\n", (float)miss_rate*100);
+    printf("%2.2f%% peor que el algoritmo óptimo\n", ((faults_opt/cantidaPaginas)-miss_rate)*100);
 }
 
 void CLOCKAlgoritmo(int marcos, int pages[], int cantidaPaginas)
@@ -328,9 +337,10 @@ void CLOCKAlgoritmo(int marcos, int pages[], int cantidaPaginas)
         }
     }
 
-    float miss_rate = ((float)fault/(float)cantidaPaginas)*100;
+    float miss_rate = ((float)fault/(float)cantidaPaginas);
     printf("\n\nTotal de miss = %d\n", fault);
-    printf("Tasa miss: %2.2f%%\n", (float)miss_rate);
+    printf("Tasa miss: %2.2f%%\n", (float)miss_rate*100);
+    printf("%2.2f%% peor que el algoritmo óptimo\n", ((faults_opt/cantidaPaginas)-miss_rate)*100);
 }
 
 void readFile(const char *nombreArchivo, int *numeroPaginas, int *arrValores)
