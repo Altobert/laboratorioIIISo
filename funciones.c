@@ -64,113 +64,6 @@ void escribirArchivo(const char *fileName, float *out, int len)
     fclose(fid);
 }
 
-void LRUAlgoritmo(int marcos, int pages[], int cantidaPaginas)
-{
-
-    printf("LRU %d, %d\n", marcos, cantidaPaginas);
-
-    int frames[10], temp[10];
-    int m, n, position, k, l, total_marcos;
-    int a = 0, b = 0, page_fault = 0;
-
-    total_marcos = marcos;
-
-    int total_pages = cantidaPaginas;
-
-    for (m = 0; m < total_marcos; m++)
-    {
-        frames[m] = -1;
-    }
-
-    for (n = 0; n < total_pages; n++)
-    {
-
-        a = 0, b = 0;
-        for (m = 0; m < total_marcos; m++)
-        {
-            if (frames[m] == pages[n])
-            {
-                a = 1;
-                b = 1;
-                break;
-            }
-        }
-        if (a == 0)
-        {
-            for (m = 0; m < total_marcos; m++)
-            {
-                if (frames[m] == -1)
-                {
-                    frames[m] = pages[n];
-                    b = 1;
-                    break;
-                }
-            }
-        }
-        if (b == 0)
-        {
-            for (m = 0; m < total_marcos; m++)
-            {
-                temp[m] = 0;
-            }
-            for (k = n - 1, l = 1; l <= total_marcos - 1; l++, k--)
-            {
-                for (m = 0; m < total_marcos; m++)
-                {
-                    if (frames[m] == pages[k])
-                    {
-                        temp[m] = 1;
-                    }
-                }
-            }
-            for (m = 0; m < total_marcos; m++)
-            {
-                if (temp[m] == 0)
-                    position = m;
-            }
-            frames[position] = pages[n];
-            page_fault++;
-        }
-        printf("\n");
-        for (m = 0; m < total_marcos; m++)
-        {
-            printf("%d\t", frames[m]);
-        }
-    }
-    printf("\nNumero total de miss:\t%d\n", page_fault);
-}
-
-void FIFOAlgoritmo(int marcos, int pages[], int cantidaPaginas)
-{
-    int i, j, n, frame[10], no, k, avail, count = 0;
-    //Cantidad de marcos
-    no = marcos;
-    //Cantidad de paginas
-    n = cantidaPaginas;
-
-    for (i = 0; i < no; i++)
-        frame[i] = -1;
-    j = 0;
-
-    for (i = 1; i <= n; i++)
-    {
-        avail = 0;
-        for (k = 0; k < no; k++)
-            if (frame[k] == pages[i])
-                avail = 1;
-        if (avail == 0)
-        {
-            frame[j] = pages[i];
-            j = (j + 1) % no;
-            count++;
-            for (k = 0; k < no; k++)
-                printf("%d\t", frame[k]);
-        }
-        printf("\n");
-    }
-    printf("\nNumero total de miss:\t%d\n", count);
-}
-
 void OPTAlgoritmo(int marcos, int pages[], int cantidaPaginas)
 {
 
@@ -267,7 +160,119 @@ void OPTAlgoritmo(int marcos, int pages[], int cantidaPaginas)
             printf("%d\t", frames[j]);
         }
     }
+    float miss_rate = ((float)faults/(float)cantidaPaginas)*100;
+    printf("\n\nTotal de miss = %d\n", faults);
+    printf("Tasa miss: %2.2f%%\n", (float)miss_rate);
+}
 
+
+void LRUAlgoritmo(int marcos, int pages[], int cantidaPaginas)
+{
+
+    printf("LRU %d, %d\n", marcos, cantidaPaginas);
+
+    int frames[10], temp[10];
+    int m, n, position, k, l, total_marcos;
+    int a = 0, b = 0, page_fault = 0;
+
+    total_marcos = marcos;
+
+    int total_pages = cantidaPaginas;
+
+    for (m = 0; m < total_marcos; m++)
+    {
+        frames[m] = -1;
+    }
+
+    for (n = 0; n < total_pages; n++)
+    {
+
+        a = 0, b = 0;
+        for (m = 0; m < total_marcos; m++)
+        {
+            if (frames[m] == pages[n])
+            {
+                a = 1;
+                b = 1;
+                break;
+            }
+        }
+        if (a == 0)
+        {
+            for (m = 0; m < total_marcos; m++)
+            {
+                if (frames[m] == -1)
+                {
+                    frames[m] = pages[n];
+                    b = 1;
+                    break;
+                }
+            }
+        }
+        if (b == 0)
+        {
+            for (m = 0; m < total_marcos; m++)
+            {
+                temp[m] = 0;
+            }
+            for (k = n - 1, l = 1; l <= total_marcos - 1; l++, k--)
+            {
+                for (m = 0; m < total_marcos; m++)
+                {
+                    if (frames[m] == pages[k])
+                    {
+                        temp[m] = 1;
+                    }
+                }
+            }
+            for (m = 0; m < total_marcos; m++)
+            {
+                if (temp[m] == 0)
+                    position = m;
+            }
+            frames[position] = pages[n];
+            page_fault++;
+        }
+        printf("\n");
+        for (m = 0; m < total_marcos; m++)
+        {
+            printf("%d\t", frames[m]);
+        }
+    }
+
+    float miss_rate = ((float)page_fault/(float)cantidaPaginas)*100;
+    printf("\n\nTotal de miss = %d\n", page_fault);
+    printf("Tasa miss: %2.2f%%\n", (float)miss_rate);
+}
+
+void FIFOAlgoritmo(int marcos, int pages[], int cantidaPaginas)
+{
+    int i, j, n, frame[10], no, k, avail, count = 0;
+    //Cantidad de marcos
+    no = marcos;
+    //Cantidad de paginas
+    n = cantidaPaginas;
+
+    for (i = 0; i < no; i++)
+        frame[i] = -1;
+    j = 0;
+
+    for (i = 1; i <= n; i++)
+    {
+        avail = 0;
+        for (k = 0; k < no; k++)
+            if (frame[k] == pages[i])
+                avail = 1;
+        if (avail == 0)
+        {
+            frame[j] = pages[i];
+            j = (j + 1) % no;
+            count++;
+            for (k = 0; k < no; k++)
+                printf("%d\t", frame[k]);
+        }
+        printf("\n");
+    }
     float miss_rate = ((float)count/(float)cantidaPaginas)*100;
     printf("\n\nTotal de miss = %d\n", count);
     printf("Tasa miss: %2.2f%%\n", (float)miss_rate);
